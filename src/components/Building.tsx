@@ -1,10 +1,11 @@
-import { useRef, useMemo } from 'react';
-import { Mesh, Vector3 } from 'three';
-import { useFrame } from '@react-three/fiber';
-import { Text, Line } from '@react-three/drei';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { ActiveBylaws } from '../types/bylaws';
+import { useRef, useMemo } from "react";
+import { Mesh, Vector3 } from "three";
+import { useFrame } from "@react-three/fiber";
+import { Text, Line } from "@react-three/drei";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import { ActiveBylaws } from "../types/bylaws";
+import { ModelBuilding } from "./ModelBuilding";
 
 interface BuildingProps {
   activeBylaws: ActiveBylaws;
@@ -45,8 +46,10 @@ const HumanFigure = ({ position }: { position: [number, number, number] }) => {
   return (
     <group position={position}>
       {/* Body */}
-      <mesh position={[0, PERSON_HEIGHT/2, 0]}>
-        <cylinderGeometry args={[PERSON_WIDTH/2, PERSON_WIDTH/2, PERSON_HEIGHT, 8]} />
+      <mesh position={[0, PERSON_HEIGHT / 2, 0]}>
+        <cylinderGeometry
+          args={[PERSON_WIDTH / 2, PERSON_WIDTH / 2, PERSON_HEIGHT, 8]}
+        />
         <meshStandardMaterial color="#444444" />
       </mesh>
       {/* Head */}
@@ -55,12 +58,12 @@ const HumanFigure = ({ position }: { position: [number, number, number] }) => {
         <meshStandardMaterial color="#444444" />
       </mesh>
       {/* Legs */}
-      <mesh position={[-PERSON_WIDTH/4, PERSON_HEIGHT/4, 0]}>
-        <cylinderGeometry args={[0.05, 0.05, PERSON_HEIGHT/2, 8]} />
+      <mesh position={[-PERSON_WIDTH / 4, PERSON_HEIGHT / 4, 0]}>
+        <cylinderGeometry args={[0.05, 0.05, PERSON_HEIGHT / 2, 8]} />
         <meshStandardMaterial color="#444444" />
       </mesh>
-      <mesh position={[PERSON_WIDTH/4, PERSON_HEIGHT/4, 0]}>
-        <cylinderGeometry args={[0.05, 0.05, PERSON_HEIGHT/2, 8]} />
+      <mesh position={[PERSON_WIDTH / 4, PERSON_HEIGHT / 4, 0]}>
+        <cylinderGeometry args={[0.05, 0.05, PERSON_HEIGHT / 2, 8]} />
         <meshStandardMaterial color="#444444" />
       </mesh>
     </group>
@@ -72,23 +75,29 @@ const Tree = ({ position }: { position: [number, number, number] }) => {
   return (
     <group position={position}>
       {/* Trunk */}
-      <mesh position={[0, TREE_HEIGHT/2, 0]}>
-        <cylinderGeometry args={[TREE_TRUNK_WIDTH/2, TREE_TRUNK_WIDTH/2, TREE_HEIGHT, 8]} />
+      <mesh position={[0, TREE_HEIGHT / 2, 0]}>
+        <cylinderGeometry
+          args={[TREE_TRUNK_WIDTH / 2, TREE_TRUNK_WIDTH / 2, TREE_HEIGHT, 8]}
+        />
         <meshStandardMaterial color="#8B4513" />
       </mesh>
       {/* Main canopy */}
-      <mesh position={[0, TREE_HEIGHT - TREE_CANOPY_HEIGHT/3, 0]}>
-        <coneGeometry args={[TREE_CANOPY_WIDTH/2, TREE_CANOPY_HEIGHT, 8]} />
+      <mesh position={[0, TREE_HEIGHT - TREE_CANOPY_HEIGHT / 3, 0]}>
+        <coneGeometry args={[TREE_CANOPY_WIDTH / 2, TREE_CANOPY_HEIGHT, 8]} />
         <meshStandardMaterial color="#228B22" />
       </mesh>
       {/* Secondary canopy layer for fuller look */}
-      <mesh position={[0, TREE_HEIGHT - TREE_CANOPY_HEIGHT/2, 0]}>
-        <coneGeometry args={[TREE_CANOPY_WIDTH/1.5, TREE_CANOPY_HEIGHT/1.5, 8]} />
+      <mesh position={[0, TREE_HEIGHT - TREE_CANOPY_HEIGHT / 2, 0]}>
+        <coneGeometry
+          args={[TREE_CANOPY_WIDTH / 1.5, TREE_CANOPY_HEIGHT / 1.5, 8]}
+        />
         <meshStandardMaterial color="#32CD32" />
       </mesh>
       {/* Top canopy layer */}
-      <mesh position={[0, TREE_HEIGHT - TREE_CANOPY_HEIGHT/6, 0]}>
-        <coneGeometry args={[TREE_CANOPY_WIDTH/2.5, TREE_CANOPY_HEIGHT/2, 8]} />
+      <mesh position={[0, TREE_HEIGHT - TREE_CANOPY_HEIGHT / 6, 0]}>
+        <coneGeometry
+          args={[TREE_CANOPY_WIDTH / 2.5, TREE_CANOPY_HEIGHT / 2, 8]}
+        />
         <meshStandardMaterial color="#90EE90" />
       </mesh>
     </group>
@@ -97,11 +106,13 @@ const Tree = ({ position }: { position: [number, number, number] }) => {
 
 export const Building = ({ activeBylaws }: BuildingProps) => {
   const buildingRef = useRef<Mesh>(null);
-  const bylawParams = useSelector((state: RootState) => state.bylaws.parameters);
-  
+  const bylawParams = useSelector(
+    (state: RootState) => state.bylaws.parameters,
+  );
+
   // Debug information
-  console.log('Active Bylaws:', activeBylaws);
-  console.log('Bylaw Parameters:', bylawParams);
+  console.log("Active Bylaws:", activeBylaws);
+  console.log("Bylaw Parameters:", bylawParams);
 
   // Calculate building dimensions based on active bylaws
   const dimensions = useMemo(() => {
@@ -143,7 +154,7 @@ export const Building = ({ activeBylaws }: BuildingProps) => {
       modified.mainWallHeight = MAIN_WALL_HEIGHT;
     }
 
-    console.log('Calculated Dimensions:', modified);
+    console.log("Calculated Dimensions:", modified);
     return modified;
   }, [activeBylaws]);
 
@@ -155,8 +166,8 @@ export const Building = ({ activeBylaws }: BuildingProps) => {
         {activeBylaws.frontSetback && (
           <Line
             points={[
-              [-LOT_WIDTH/2, 0, -LOT_DEPTH/2],
-              [LOT_WIDTH/2, 0, -LOT_DEPTH/2 + FRONT_SETBACK]
+              [-LOT_WIDTH / 2, 0, -LOT_DEPTH / 2],
+              [LOT_WIDTH / 2, 0, -LOT_DEPTH / 2 + FRONT_SETBACK],
             ]}
             color="red"
             dashed
@@ -167,8 +178,8 @@ export const Building = ({ activeBylaws }: BuildingProps) => {
         {activeBylaws.rearSetback && (
           <Line
             points={[
-              [-LOT_WIDTH/2, 0, LOT_DEPTH/2],
-              [LOT_WIDTH/2, 0, LOT_DEPTH/2 - REAR_SETBACK]
+              [-LOT_WIDTH / 2, 0, LOT_DEPTH / 2],
+              [LOT_WIDTH / 2, 0, LOT_DEPTH / 2 - REAR_SETBACK],
             ]}
             color="red"
             dashed
@@ -180,16 +191,16 @@ export const Building = ({ activeBylaws }: BuildingProps) => {
           <>
             <Line
               points={[
-                [-LOT_WIDTH/2 + SIDE_SETBACK, 0, -LOT_DEPTH/2],
-                [-LOT_WIDTH/2 + SIDE_SETBACK, 0, LOT_DEPTH/2]
+                [-LOT_WIDTH / 2 + SIDE_SETBACK, 0, -LOT_DEPTH / 2],
+                [-LOT_WIDTH / 2 + SIDE_SETBACK, 0, LOT_DEPTH / 2],
               ]}
               color="red"
               dashed
             />
             <Line
               points={[
-                [LOT_WIDTH/2 - SIDE_SETBACK, 0, -LOT_DEPTH/2],
-                [LOT_WIDTH/2 - SIDE_SETBACK, 0, LOT_DEPTH/2]
+                [LOT_WIDTH / 2 - SIDE_SETBACK, 0, -LOT_DEPTH / 2],
+                [LOT_WIDTH / 2 - SIDE_SETBACK, 0, LOT_DEPTH / 2],
               ]}
               color="red"
               dashed
@@ -198,14 +209,36 @@ export const Building = ({ activeBylaws }: BuildingProps) => {
         )}
 
         {/* Building size reduction indicators */}
-        {(activeBylaws.frontSetback || activeBylaws.rearSetback || activeBylaws.sideSetback) && (
+        {(activeBylaws.frontSetback ||
+          activeBylaws.rearSetback ||
+          activeBylaws.sideSetback) && (
           <Line
             points={[
-              [-dimensions.width/2, 0, -dimensions.depth/2 + dimensions.position.z],
-              [dimensions.width/2, 0, -dimensions.depth/2 + dimensions.position.z],
-              [dimensions.width/2, 0, dimensions.depth/2 + dimensions.position.z],
-              [-dimensions.width/2, 0, dimensions.depth/2 + dimensions.position.z],
-              [-dimensions.width/2, 0, -dimensions.depth/2 + dimensions.position.z]
+              [
+                -dimensions.width / 2,
+                0,
+                -dimensions.depth / 2 + dimensions.position.z,
+              ],
+              [
+                dimensions.width / 2,
+                0,
+                -dimensions.depth / 2 + dimensions.position.z,
+              ],
+              [
+                dimensions.width / 2,
+                0,
+                dimensions.depth / 2 + dimensions.position.z,
+              ],
+              [
+                -dimensions.width / 2,
+                0,
+                dimensions.depth / 2 + dimensions.position.z,
+              ],
+              [
+                -dimensions.width / 2,
+                0,
+                -dimensions.depth / 2 + dimensions.position.z,
+              ],
             ]}
             color="yellow"
             dashed
@@ -224,8 +257,16 @@ export const Building = ({ activeBylaws }: BuildingProps) => {
         {/* Main wall height indicator */}
         <Line
           points={[
-            [-dimensions.width/2, 0, -dimensions.depth/2 + dimensions.position.z],
-            [-dimensions.width/2, MAIN_WALL_HEIGHT, -dimensions.depth/2 + dimensions.position.z]
+            [
+              -dimensions.width / 2,
+              0,
+              -dimensions.depth / 2 + dimensions.position.z,
+            ],
+            [
+              -dimensions.width / 2,
+              MAIN_WALL_HEIGHT,
+              -dimensions.depth / 2 + dimensions.position.z,
+            ],
           ]}
           color="blue"
           dashed
@@ -234,8 +275,16 @@ export const Building = ({ activeBylaws }: BuildingProps) => {
         {/* Maximum height indicator */}
         <Line
           points={[
-            [-dimensions.width/2, 0, dimensions.depth/2 + dimensions.position.z],
-            [-dimensions.width/2, MAX_HEIGHT, dimensions.depth/2 + dimensions.position.z]
+            [
+              -dimensions.width / 2,
+              0,
+              dimensions.depth / 2 + dimensions.position.z,
+            ],
+            [
+              -dimensions.width / 2,
+              MAX_HEIGHT,
+              dimensions.depth / 2 + dimensions.position.z,
+            ],
           ]}
           color="green"
           dashed
@@ -249,11 +298,11 @@ export const Building = ({ activeBylaws }: BuildingProps) => {
       {/* Lot outline */}
       <Line
         points={[
-          [-LOT_WIDTH/2, 0, -LOT_DEPTH/2],
-          [LOT_WIDTH/2, 0, -LOT_DEPTH/2],
-          [LOT_WIDTH/2, 0, LOT_DEPTH/2],
-          [-LOT_WIDTH/2, 0, LOT_DEPTH/2],
-          [-LOT_WIDTH/2, 0, -LOT_DEPTH/2]
+          [-LOT_WIDTH / 2, 0, -LOT_DEPTH / 2],
+          [LOT_WIDTH / 2, 0, -LOT_DEPTH / 2],
+          [LOT_WIDTH / 2, 0, LOT_DEPTH / 2],
+          [-LOT_WIDTH / 2, 0, LOT_DEPTH / 2],
+          [-LOT_WIDTH / 2, 0, -LOT_DEPTH / 2],
         ]}
         color="blue"
       />
@@ -265,7 +314,9 @@ export const Building = ({ activeBylaws }: BuildingProps) => {
       </mesh>
 
       {/* Original building outline (when any setback is active) */}
-      {(activeBylaws.frontSetback || activeBylaws.rearSetback || activeBylaws.sideSetback) && (
+      {(activeBylaws.frontSetback ||
+        activeBylaws.rearSetback ||
+        activeBylaws.sideSetback) && (
         <mesh position={[0, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]}>
           <planeGeometry args={[LOT_WIDTH, LOT_DEPTH]} />
           <meshStandardMaterial color="#ff0000" transparent opacity={0.1} />
@@ -273,19 +324,27 @@ export const Building = ({ activeBylaws }: BuildingProps) => {
       )}
 
       {/* Main Building Structure */}
-      <mesh 
-        ref={buildingRef} 
+      <ModelBuilding
+        targetSize={{
+          width: dimensions.width,
+          height: dimensions.height,
+          depth: dimensions.depth,
+        }}
+        position={[dimensions.position.x, 0, dimensions.position.z]}
+      />
+      {/* <mesh
+        ref={buildingRef}
         position={[
-          dimensions.position.x, 
-          dimensions.height / 2, 
-          dimensions.position.z
+          dimensions.position.x,
+          dimensions.height / 2,
+          dimensions.position.z,
         ]}
       >
-        <boxGeometry 
-          args={[dimensions.width, dimensions.height, dimensions.depth]} 
+        <boxGeometry
+          args={[dimensions.width, dimensions.height, dimensions.depth]}
         />
         <meshStandardMaterial color="#f0d090" />
-      </mesh>
+      </mesh> */}
 
       {/* Setback Visualization */}
       {setbackVisuals}
@@ -294,12 +353,12 @@ export const Building = ({ activeBylaws }: BuildingProps) => {
       {heightVisuals}
 
       {/* Human figures for scale */}
-      <HumanFigure position={[LOT_WIDTH/2 + 1, 0, -LOT_DEPTH/2 + 2]} />
-      <HumanFigure position={[-LOT_WIDTH/2 - 1, 0, LOT_DEPTH/2 - 2]} />
+      <HumanFigure position={[LOT_WIDTH / 2 + 1, 0, -LOT_DEPTH / 2 + 2]} />
+      <HumanFigure position={[-LOT_WIDTH / 2 - 1, 0, LOT_DEPTH / 2 - 2]} />
 
       {/* Trees for scale */}
-      <Tree position={[LOT_WIDTH/2 + 2, 0, 0]} />
-      <Tree position={[-LOT_WIDTH/2 - 2, 0, 0]} />
+      <Tree position={[LOT_WIDTH / 2 + 2, 0, 0]} />
+      <Tree position={[-LOT_WIDTH / 2 - 2, 0, 0]} />
     </group>
   );
-}; 
+};

@@ -1,0 +1,11 @@
+Model Information:
+* title:	3 storey residential building
+* source:	https://sketchfab.com/3d-models/3-storey-residential-building-f4826003d4594cd6b85dc2f99a93669b
+* author:	bean(alwayshasbean) (https://sketchfab.com/alwayshasbean)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "3 storey residential building" (https://sketchfab.com/3d-models/3-storey-residential-building-f4826003d4594cd6b85dc2f99a93669b) by bean(alwayshasbean) (https://sketchfab.com/alwayshasbean) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
